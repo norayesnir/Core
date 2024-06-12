@@ -4,14 +4,14 @@ Rinsly Core is a Payload x Nuxt boilerplate for building websites and web applic
 In this repo, you will find the core basic setup for a Nuxt project with Payload CMS. This setup includes the following:
 
 - Nuxt
-- - Nuxt Image
-- - Nuxt Fonts
-- - Nuxt Eslint
-- - Pinia
-- - Tailwind CSS
-- - Tailwind Container queries
-- - Icon
-- - Apollo
+  - Nuxt Image
+  - Nuxt Fonts
+  - Nuxt Eslint
+  - Pinia
+  - Tailwind CSS
+  - Tailwind Container queries
+  - Icon
+  - Apollo
 
 - Payload CMS
 
