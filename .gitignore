@@ -40,3 +40,4 @@ ecosystem.config.js
 # turbo
 .turbo
 
+.vercel
