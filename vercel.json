@@ -2,7 +2,8 @@
   "builds": [
     {
       "src": "apps/client/nuxt.config.js",
-      "use": "@vercel/nuxt"
+      "use": "@vercel/nuxt",
+      "outputDirectory": "apps/client/.output"
     },
     {
       "src": "apps/server/server.js",
@@ -12,7 +13,8 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "apps/server/$1"
+      "dest": "apps/server/$1",
+      "outputDirectory": "apps/server/dist"
     },
     {
       "src": "/(.*)",
