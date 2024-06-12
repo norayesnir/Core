@@ -1,22 +1,9 @@
 {
-  "builds": [
-    {
-      "src": "apps/client/nuxt.config.js",
-      "use": "@vercel/nuxt"
-    },
-    {
-      "src": "apps/server/server.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/admin/(.*)",
-      "dest": "apps/server/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "apps/client/.output/public/$1"
-    }
-  ]
+  "buildCommand": "turbo run build",
+  "devCommand": "turbo run dev",
+  "installCommand": "yarn install",
+  "cleanUrls": true,
+  "framework": "nuxtjs",
+  "outputDirectory": ".output/**",
+  "public": false
 }
