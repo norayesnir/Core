@@ -4,5 +4,6 @@
   "installCommand": "yarn install",
   "cleanUrls": true,
   "framework": "nuxtjs",
+  "outputDirectory": ".vercel/output",
   "public": false
 }
