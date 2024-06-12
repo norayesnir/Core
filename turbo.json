@@ -1,0 +1,77 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": [".env"],
+  "globalEnv": [
+    "PAYLOAD_SECRET",
+    "PAYLOAD_PUBLIC_PORT",
+    "DATABASE_URI"
+  ],
+  "tasks": {
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "env": [
+        "PAYLOAD_PUBLIC_SITE_NAME",
+        "PAYLOAD_PUBLIC_SITE_URL",
+        "PAYLOAD_PUBLIC_PORT",
+        "PAYLOAD_PUBLIC_API_ROUTE",
+        "PAYLOAD_PUBLIC_UPLOAD_ROUTE",
+        "PAYLOAD_SECRET"
+      ]
+    },
+    "nuxt#build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        ".output/**"
+      ],
+      "env": [
+        "NITRO_HOST",
+        "NITRO_PORT"
+      ]
+    },
+    "payload#build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "build/**",
+        "dist/**"
+      ],
+      "env": [
+        "DATABASE_NAME",
+        "PAYLOAD_SECRET",
+        "PAYLOAD_PUBLIC_PORT"
+      ]
+    },
+    "start": {
+      "cache": false,
+      "persistent": true
+    },
+    "generate": {
+      "cache": false
+    },
+    "payload#generate": {
+      "outputs": [
+        "types.d.ts"
+      ]
+    },
+    "nuxt#generate": {
+      "dependsOn": [
+        "payload#generate"
+      ],
+      "outputs": [
+        "graphql/index.js",
+        "graphql/possibleTypes.json"
+      ]
+    },
+    "lint": {},
+    "format": {}
+  }
+}

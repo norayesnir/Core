@@ -1,0 +1,31 @@
+{
+	"name": "rinsly-boilerplate",
+	"private": true,
+	"workspaces": [
+		"apps/*"
+	],
+	"scripts": {
+		"dev": "dotenv -- turbo run dev",
+		"build": "dotenv -- turbo run build",
+		"start": "dotenv -- turbo run start",
+		"generate": "dotenv -- turbo run generate",
+		"lint": "turbo run lint",
+		"format": "prettier --write \"**/*.{ts,tsx,js,md}\"",
+		"update": "yarn upgrade-interactive; yarn upgrade-interactive  nuxt; yarn upgrade-interactive payload",
+		"update-latest": "yarn upgrade-interactive --latest; yarn upgrade-interactive --latest  nuxt; yarn upgrade-interactive --latest payload",
+		"configure-env": "configure-env"
+	},
+	"devDependencies": {
+		"configure-env": "^1.0.0",
+		"turbo": "^2.0.3"
+	},
+	"packageManager": "yarn@1.22.22",
+	"dependencies": {
+		"dotenv-cli": "^7.4.2",
+		"prettier": "^3.3.2"
+	},
+	"resolutions": {
+		"sharp": "latest"
+	}
+}
+
