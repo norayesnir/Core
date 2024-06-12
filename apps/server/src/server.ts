@@ -20,6 +20,14 @@ const start = async () => {
     },
   })
 
+  app.use('*', (req, res, next) => {
+    if (req.method === 'OPTIONS') {
+    return res.status(204).end()
+    } else {
+      next()
+    }
+  })
+
   app.listen(process.env.PAYLOAD_PUBLIC_PORT)
 }
 
