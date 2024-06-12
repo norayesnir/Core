@@ -3,7 +3,9 @@
     {
       "src": "apps/client/nuxt.config.js",
       "use": "@vercel/nuxt",
-      "outputDirectory": "apps/client/.output"
+      "config": {
+        "outputDirectory": "apps/client/.output"
+      }
     },
     {
       "src": "apps/server/server.js",
@@ -14,7 +16,9 @@
     {
       "src": "/api/(.*)",
       "dest": "apps/server/$1",
-      "outputDirectory": "apps/server/dist"
+      "config": {
+        "outputDirectory": "apps/server/dist"
+      }
     },
     {
       "src": "/(.*)",
