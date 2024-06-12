@@ -2441,7 +2441,7 @@
     "@parcel/watcher-win32-ia32" "2.4.1"
     "@parcel/watcher-win32-x64" "2.4.1"
 
-"@payloadcms/bundler-vite@^1.0.0":
+"@payloadcms/bundler-vite@^0.1.7":
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/@payloadcms/bundler-vite/-/bundler-vite-0.1.7.tgz#8b8fc0280058d5ef6cb29dec774bcf1513f679eb"
   integrity sha512-ld9VIi20brY0Vme4URnqFhKzpF3g5TGJ8vcnh46Jlkci73FWThG9ARMxB9WrvtFt/tRcAU64w9hMEohKQ0MLQg==
