@@ -1,0 +1,22 @@
+{
+  "builds": [
+    {
+      "src": "apps/client/nuxt.config.js",
+      "use": "@vercel/nuxt"
+    },
+    {
+      "src": "apps/server/server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "apps/server/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "apps/client/.output/public/$1"
+    }
+  ]
+}
