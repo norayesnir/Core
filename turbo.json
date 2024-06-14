@@ -4,7 +4,11 @@
   "globalEnv": [
     "PAYLOAD_SECRET",
     "PAYLOAD_PUBLIC_PORT",
-    "DATABASE_URI"
+    "DATABASE_URI",
+    "PAYLOAD_PUBLIC_SITE_NAME",
+    "PAYLOAD_PUBLIC_SITE_URL",
+    "PAYLOAD_PUBLIC_API_ROUTE",
+    "PAYLOAD_PUBLIC_UPLOAD_ROUTE"
   ],
   "tasks": {
     "dev": {
@@ -12,6 +16,9 @@
       "persistent": true
     },
     "build": {
+      "inputs": [
+        ".env"
+      ],
       "dependsOn": [
         "^build"
       ],
@@ -36,7 +43,12 @@
       ],
       "env": [
         "NITRO_HOST",
-        "NITRO_PORT"
+        "NITRO_PORT",
+        "PAYLOAD_PUBLIC_SITE_NAME",
+        "PAYLOAD_PUBLIC_SITE_URL",
+        "PAYLOAD_PUBLIC_PORT",
+        "PAYLOAD_PUBLIC_API_ROUTE",
+        "PAYLOAD_PUBLIC_UPLOAD_ROUTE"
       ]
     },
     "payload#build": {
@@ -66,6 +78,10 @@
       ]
     },
     "nuxt#generate": {
+      "env": [
+        "PAYLOAD_PUBLIC_SITE_URL",
+        "PAYLOAD_PUBLIC_API_ROUTE"
+      ],
       "dependsOn": [
         "payload#generate"
       ],

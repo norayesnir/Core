@@ -6,6 +6,7 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { buildConfig } from 'payload/config'
 import seo from '@payloadcms/plugin-seo'
 import computeBlurhash from 'payload-blurhash-plugin'
+import webp from 'payload-webp'
 
 import * as Collections from './collections'
 import * as Globals from './globals'
@@ -20,11 +21,11 @@ export default buildConfig({
   editor: lexicalEditor({}),
   collections: Object.values(Collections),
   globals: Object.values(Globals),
+  routes: {
+    api: process.env.PAYLOAD_PUBLIC_API_ROUTE,
+  },
   typescript: {
     outputFile: path.resolve(__dirname, '../types.d.ts'),
-  },
-  graphQL: {
-    schemaOutputFile: path.resolve(__dirname, 'generated-schema.graphql'),
   },
   db: postgresAdapter({
     pool: {
@@ -51,5 +52,6 @@ export default buildConfig({
       tabbedUI: true,
     }),
     computeBlurhash(),
+    webp()
   ],
 })
