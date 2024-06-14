@@ -17,4 +17,3 @@ const Settings: GlobalConfig = {
 }
 
 export default Settings
-

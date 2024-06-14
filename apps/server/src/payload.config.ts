@@ -1,10 +1,12 @@
 import path from 'path'
 
-import { payloadCloud } from '@payloadcms/plugin-cloud'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { viteBundler } from '@payloadcms/bundler-vite'
-import { slateEditor } from '@payloadcms/richtext-slate'
+import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { buildConfig } from 'payload/config'
+import seo from '@payloadcms/plugin-seo'
+import computeBlurhash from 'payload-blurhash-plugin'
+import webp from 'payload-webp'
 
 import * as Collections from './collections'
 import * as Globals from './globals'
@@ -16,16 +18,15 @@ export default buildConfig({
     user: Collections.Users.slug,
     bundler: viteBundler(),
   },
-  editor: slateEditor({}),
+  editor: lexicalEditor({}),
   collections: Object.values(Collections),
   globals: Object.values(Globals),
+  routes: {
+    api: process.env.PAYLOAD_PUBLIC_API_ROUTE,
+  },
   typescript: {
     outputFile: path.resolve(__dirname, '../types.d.ts'),
   },
-  graphQL: {
-    schemaOutputFile: path.resolve(__dirname, 'generated-schema.graphql'),
-  },
-  plugins: [payloadCloud()],
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URI,
@@ -42,4 +43,15 @@ export default buildConfig({
       fileSize: 20000000,
     },
   },
+  plugins: [
+    seo({
+      collections: ['pages'],
+      globals: ['settings'],
+      uploadsCollection: 'images',
+      // generateTitle: ({ doc }) => `${doc?.title?.value} | ${process.env.PAYLOAD_PUBLIC_SITE_NAME}`,
+      tabbedUI: true,
+    }),
+    computeBlurhash(),
+    webp()
+  ],
 })
