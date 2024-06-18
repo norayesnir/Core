@@ -16,6 +16,7 @@ export default buildConfig({
   debug: process.env.NODE_ENV !== 'production',
   admin: {
     user: Collections.Users.slug,
+    css: path.resolve(__dirname, '../styles.css'),
     bundler: viteBundler(),
   },
   editor: lexicalEditor({}),
@@ -26,6 +27,26 @@ export default buildConfig({
   },
   typescript: {
     outputFile: path.resolve(__dirname, '../types.d.ts'),
+  },
+  localization: {
+    locales: [
+      {
+        label: {
+          en: 'English',
+          nl: 'Engels',
+        },
+        code: 'en',
+      },
+      {
+        label: {
+          en: 'Dutch',
+          nl: 'Nederlands',
+        },
+        code: 'nl',
+      },
+    ],
+    defaultLocale: 'en',
+    fallback: true,
   },
   db: postgresAdapter({
     pool: {

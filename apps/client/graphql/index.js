@@ -1,4 +1,20 @@
 import gql from 'graphql-tag';
+export const MenuItemFragmentDoc = gql`
+    fragment MenuItem on MenuItem {
+  __typename
+  id
+  title
+  description
+  icon
+  externalUrl
+  referenceToPage {
+    id
+  }
+  children {
+    id
+  }
+}
+    `;
 export const ImageFragmentDoc = gql`
     fragment Image on Image {
   id
@@ -75,13 +91,32 @@ export const GetImageDocument = gql`
   }
 }
     ${ImageFragmentDoc}`;
+export const GetNavigationMenuDocument = gql`
+    query GetNavigationMenu {
+  NavigationMenu {
+    logo {
+      ...Image
+    }
+    alternateLogo {
+      ...Image
+    }
+    routes {
+      ...MenuItem
+    }
+  }
+}
+    ${ImageFragmentDoc}
+${MenuItemFragmentDoc}`;
 export const GetPageDocument = gql`
     query GetPage($template: Page_template_Input) {
   Pages(where: {template: {equals: $template}}) {
     docs {
       ...Page
+      title
+      template
+      route
       homeFields {
-        myTextField
+        isPage
       }
     }
   }

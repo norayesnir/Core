@@ -1,0 +1,18 @@
+.icon-select-field {
+  @apply flex flex-col gap-4 md:gap-6 md:grid md:grid-cols-[128px_1fr] md:items-center mb-[var(--spacing-field)];
+
+  &-preview-container {
+    .icon-select-field-preview {
+      @apply py-4 md:py-0 flex items-center justify-center bg-[var(--theme-input-bg)] border-solid border-[var(--theme-elevation-150)] md:aspect-square;
+    }
+    .icon-select-field-preview-icon {
+      @apply text-[96px];
+    }
+  }
+
+  &-select-container {
+    .field-description {
+      @apply flex flex-col;
+    }
+  }
+} 

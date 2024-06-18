@@ -1,6 +1,7 @@
-import type { CollectionConfig } from 'payload/types'
-import * as PageTemplates from '../pages'
-import { livePreviewBreakpoints } from '../utils'
+
+import type { CollectionConfig } from 'payload/types';
+import * as PageTemplates from '../pages';
+import { livePreviewBreakpoints } from '../utils';
 
 const Pages: CollectionConfig = {
   slug: 'pages',
@@ -9,14 +10,14 @@ const Pages: CollectionConfig = {
     plural: 'Pages',
   },
   admin: {
-    useAsTitle: 'template',
-    defaultColumns: ['template', 'id'],
+    useAsTitle: 'title',
+    defaultColumns: ['title', 'template', 'id'],
     livePreview: {
       url: ({ data }) => {
         if (data.template === 'Home') {
-          return process.env.PAYLOAD_PUBLIC_SITE_URL
+          return process.env.PAYLOAD_PUBLIC_SITE_URL;
         } else {
-          return `${process.env.PAYLOAD_PUBLIC_SITE_URL}/${data.template.toLowerCase()}`
+          return `${process.env.PAYLOAD_PUBLIC_SITE_URL}/${data.title.toLowerCase()}`;
         }
       },
       breakpoints: livePreviewBreakpoints,
@@ -24,11 +25,11 @@ const Pages: CollectionConfig = {
   },
   access: {
     create: ({ req: { user } }) => {
-      return user.role === 'admin'
+      return user.role === 'admin';
     },
     read: () => true,
     delete: ({ req: { user } }) => {
-      return user.role === 'admin'
+      return user.role === 'admin';
     },
   },
   versions: true,
@@ -42,14 +43,44 @@ const Pages: CollectionConfig = {
         },
       ],
     },
+    // Title field should be before slug field for correct siblingData reference
+    {
+      name: 'slug',
+      type: 'text',
+      hidden: true,
+      unique: true,
+      hooks: {
+        beforeChange: [
+          ({ siblingData }) => {
+              siblingData.slug = siblingData.title.toLowerCase().replace(/ /g, '-');
+          },
+        ],
+        beforeValidate: [
+          ({ data, siblingData }) => {
+            if (!siblingData.slug && siblingData.title) {
+              // Ensure slug is generated if it's missing and title exists
+              data.slug = siblingData.title.toLowerCase().replace(/ /g, '-');
+            }
+          },
+        ],
+      },
+    },
+    {
+      name: 'title',
+      label: 'Title',
+      type: 'text',
+      required: true,
+      admin: {
+        position: 'sidebar',
+      },
+    },
     {
       name: 'template',
       type: 'select',
       required: true,
-      unique: true,
       access: {
         update: ({ req: { user } }) => {
-          return user.role === 'admin'
+          return user.role === 'admin';
         },
       },
       options: Object.keys(PageTemplates),
@@ -66,22 +97,23 @@ const Pages: CollectionConfig = {
       hooks: {
         beforeChange: [
           ({ siblingData }) => {
-            delete siblingData['route']
+            delete siblingData['route'];
           },
         ],
         afterRead: [
           ({ data }) => {
             switch (data.template) {
               case 'Home':
-                return '/'
+                return '/';
               default:
-                return '/'
+                return `/${data.title.toLowerCase()}`;
             }
           },
         ],
       },
     },
   ],
-}
+};
 
-export default Pages
+export default Pages;
+
