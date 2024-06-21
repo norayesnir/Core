@@ -9,8 +9,10 @@ const Home: Field = {
   },
   fields: [
     {
-      name: 'myTextField',
-      type: 'text',
+      name: 'isPage',
+      label: 'Is Page',
+      type: 'checkbox',
+      defaultValue: true,
     },
   ],
 }

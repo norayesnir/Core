@@ -17,7 +17,7 @@
 	},
 	"devDependencies": {
 		"configure-env": "^1.0.0",
-		"turbo": "^2.0.3"
+		"turbo": "^2.0.4"
 	},
 	"packageManager": "yarn@1.22.22",
 	"dependencies": {
@@ -28,4 +28,3 @@
 		"sharp": "latest"
 	}
 }
-

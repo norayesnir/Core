@@ -1,5 +1,5 @@
-import type { SerializedRootNode } from 'lexical'
+import type { SerializedRootNode } from "lexical";
 
 export interface LexicalRichTextField {
-  root: SerializedRootNode
+	root: SerializedRootNode;
 }

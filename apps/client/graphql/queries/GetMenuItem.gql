@@ -1,0 +1,15 @@
+#import "@/graphql/fragments/MenuItem.gql"
+#import "@/graphql/fragments/MenuItemExpandable.gql"
+
+query GetMenuItem($id: Int!) {
+  Menu_item(id: $id) {
+    title
+    template
+    default {
+      ...MenuItemDefault
+    }
+    expandable {
+      ...MenuItemExpandable
+    }
+  }
+}

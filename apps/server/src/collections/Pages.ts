@@ -9,14 +9,14 @@ const Pages: CollectionConfig = {
     plural: 'Pages',
   },
   admin: {
-    useAsTitle: 'template',
-    defaultColumns: ['template', 'id'],
+    useAsTitle: 'title',
+    defaultColumns: ['title', 'template', 'id'],
     livePreview: {
       url: ({ data }) => {
         if (data.template === 'Home') {
           return process.env.PAYLOAD_PUBLIC_SITE_URL
         } else {
-          return `${process.env.PAYLOAD_PUBLIC_SITE_URL}/${data.template.toLowerCase()}`
+          return `${process.env.PAYLOAD_PUBLIC_SITE_URL}/${data.title.toLowerCase()}`
         }
       },
       breakpoints: livePreviewBreakpoints,
@@ -43,10 +43,46 @@ const Pages: CollectionConfig = {
       ],
     },
     {
+      name: 'title',
+      label: 'Title',
+      type: 'text',
+      required: true,
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'slug',
+      type: 'text',
+      unique: true,
+      admin: {
+        position: 'sidebar',
+        readOnly: true,
+        description:
+          'This field is  automatically generated based on the title. To change it, edit the title field.',
+      },
+      hooks: {
+        beforeChange: [
+          ({ siblingData }) => {
+            siblingData.slug = siblingData.title
+              .toLowerCase()
+              .replace(/ /g, '-')
+          },
+        ],
+        beforeValidate: [
+          ({ data, siblingData }) => {
+            if (!siblingData.slug && siblingData.title) {
+              // Ensure slug is generated if it's missing and title exists
+              data.slug = siblingData.title.toLowerCase().replace(/ /g, '-')
+            }
+          },
+        ],
+      },
+    },
+    {
       name: 'template',
       type: 'select',
       required: true,
-      unique: true,
       access: {
         update: ({ req: { user } }) => {
           return user.role === 'admin'
@@ -75,7 +111,7 @@ const Pages: CollectionConfig = {
               case 'Home':
                 return '/'
               default:
-                return '/'
+                return `/${data.title.toLowerCase().replace(/ /g, '-')}`
             }
           },
         ],

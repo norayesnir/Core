@@ -9,6 +9,7 @@
 export interface Config {
   collections: {
     images: Image;
+    menu_item: MenuItem;
     pages: Page;
     users: User;
     videos: Video;
@@ -16,6 +17,7 @@ export interface Config {
     'payload-migrations': PayloadMigration;
   };
   globals: {
+    'navigation-menu': NavigationMenu;
     settings: Settings;
   };
 }
@@ -180,19 +182,52 @@ export interface Image {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "menu_item".
+ */
+export interface MenuItem {
+  id: number;
+  title: string;
+  template: 'Default' | 'Expandable';
+  default?: {
+    externalLink?: boolean | null;
+    referenceToPage?: (number | null) | Page;
+    externalUrl?: string | null;
+    newTab?: boolean | null;
+    icon?: {
+      name?: string | null;
+      right?: boolean | null;
+    };
+  };
+  expandable?: {
+    icon?: {
+      name?: string | null;
+    };
+    children?: (number | MenuItem)[] | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages".
  */
 export interface Page {
   id: number;
+  defaultFields?: {
+    excerpt?: string | null;
+    featuredImage?: number | Image | null;
+  };
   homeFields?: {
-    myTextField?: string | null;
+    isPage?: boolean | null;
   };
   meta?: {
     title?: string | null;
     description?: string | null;
     image?: number | Image | null;
   };
-  template: 'Home';
+  title: string;
+  slug?: string | null;
+  template: 'Default' | 'Home';
   route?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -278,10 +313,28 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "navigation-menu".
+ */
+export interface NavigationMenu {
+  id: number;
+  logo?: number | Image | null;
+  uploadAlternateLogo?: boolean | null;
+  alternateLogo?: number | Image | null;
+  routes?: (number | MenuItem)[] | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "settings".
  */
 export interface Settings {
   id: number;
+  icon?: {
+    library?: string | null;
+    type?: ('filled' | 'outlined') | null;
+    corners?: ('' | 'rounded' | 'sharp') | null;
+  };
   meta?: {
     title?: string | null;
     description?: string | null;

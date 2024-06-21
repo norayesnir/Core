@@ -23,8 +23,8 @@ export default async function (template: Page['template']) {
   if (data.value?.Pages?.docs.length) {
     doc.value = data.value.Pages?.docs[0]
 
-    const docMeta = doc.value.meta
-    const seoMeta: UseSeoMetaInput = { title: doc.value.template }
+    const docMeta = doc.value!.meta
+    const seoMeta: UseSeoMetaInput = { title: doc.value!.template }
 
     seoMeta.title = docMeta?.title || seoMeta.title
 
@@ -41,6 +41,9 @@ export default async function (template: Page['template']) {
 
     if (docMeta?.image) {
       const opengraphImage = useRelationshipField(docMeta?.image)
+
+      // @ts-expect-error - `sizes` is not defined in the type
+      // TODO: Resolve this issue
       seoMeta.ogImage = opengraphImage.value?.sizes?.opengraph?.url || ''
     }
 
