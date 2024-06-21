@@ -1,0 +1,12 @@
+fragment MenuItemDefault on Menu_item_Default {
+  externalLink
+  externalUrl
+  newTab
+  referenceToPage {
+    route
+  }
+  icon {
+    name
+    right
+  }
+}

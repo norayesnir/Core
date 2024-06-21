@@ -60,6 +60,8 @@
     "pinia": "^2.1.7",
     "scss": "^0.2.4",
     "vue": "^3.4.27",
-    "vue-router": "^4.3.3"
+    "vue-router": "^4.3.3",
+    "@tailwindcss/container-queries": "^0.1.1",
+    "@iconify-json/material-symbols": "^1.1.17"
   }
 }

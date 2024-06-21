@@ -187,13 +187,23 @@ export interface Image {
 export interface MenuItem {
   id: number;
   title: string;
-  externalLink?: boolean | null;
-  referenceToPage?: (number | null) | Page;
-  externalUrl?: string | null;
-  newTab?: boolean | null;
-  description?: string | null;
-  icon?: string | null;
-  children?: (number | MenuItem)[] | null;
+  template: 'Default' | 'Expandable';
+  default?: {
+    externalLink?: boolean | null;
+    referenceToPage?: (number | null) | Page;
+    externalUrl?: string | null;
+    newTab?: boolean | null;
+    icon?: {
+      name?: string | null;
+      right?: boolean | null;
+    };
+  };
+  expandable?: {
+    icon?: {
+      name?: string | null;
+    };
+    children?: (number | MenuItem)[] | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -215,8 +225,8 @@ export interface Page {
     description?: string | null;
     image?: number | Image | null;
   };
-  slug?: string | null;
   title: string;
+  slug?: string | null;
   template: 'Default' | 'Home';
   route?: string | null;
   updatedAt: string;
@@ -320,6 +330,11 @@ export interface NavigationMenu {
  */
 export interface Settings {
   id: number;
+  icon?: {
+    library?: string | null;
+    type?: ('filled' | 'outlined') | null;
+    corners?: ('' | 'rounded' | 'sharp') | null;
+  };
   meta?: {
     title?: string | null;
     description?: string | null;

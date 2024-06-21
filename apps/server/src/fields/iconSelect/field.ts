@@ -3,13 +3,13 @@ import { IconSelectComponent } from './component'
 import './style.scss'
 
 const iconField: Field = {
-  name: 'icon',
+  name: 'name',
   type: 'text',
   admin: {
     components: {
       Field: IconSelectComponent,
     },
-  }
+  },
 }
 
 export default iconField

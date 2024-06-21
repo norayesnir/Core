@@ -1,0 +1,70 @@
+.grid-container {
+  --spacing: 8px; // Space between the container and the screen
+  --overflow: 100px; // Width of the overflow area
+  --content-size: calc(1440px + (var(--spacing) * 2));
+
+  > div:not(.grid-container-screen):not(.grid-container-overflow),
+  > section:not(.grid-container-screen):not(.grid-container-overflow) {
+    grid-column: content-start / content-end;
+    @apply px-2;
+  }
+
+  @apply w-full grid;
+  grid-template-columns:
+    [screen-start] 1fr [overflow-start] 1fr [content-start] minmax(
+      0,
+      var(--content-size)
+    )
+    [content-end] 1fr [overflow-end] 1fr [screen-end];
+
+  &-screen {
+    grid-column: screen-start / screen-end;
+    width: 100%;
+  }
+
+  &-overflow {
+    grid-column: overflow-start / overflow-end;
+  }
+
+  &-content {
+    grid-column: content-start / content-end;
+    @apply px-2;
+  }
+}
+
+@media screen and (min-width: 1672px) {
+  .grid-container {
+    grid-template-columns:
+      [screen-start] 1fr [overflow-start] 50px [content-start] minmax(
+        0,
+        var(--content-size)
+      )
+      [content-end] 50px [overflow-end] 1fr [screen-end];
+  }
+}
+
+@media screen and (max-width: 1439px) {
+  .grid-container {
+    --content-size: calc(
+      976px + (var(--spacing) * 2)
+    ); // 976px = 1440px - 464px
+  }
+}
+
+@media screen and (max-width: 975px) {
+  .grid-container {
+    --content-size: calc(768px + (var(--spacing) * 2)); // 768px = 976px - 208px
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .grid-container {
+    --content-size: calc(480px + (var(--spacing) * 2)); // 480px = 768px - 288px
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .grid-container {
+    --content-size: calc(480px + (var(--spacing) * 2)); // 480px = 480px - 0px
+  }
+}

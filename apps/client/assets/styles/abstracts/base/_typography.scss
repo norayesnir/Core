@@ -1,0 +1,87 @@
+@import url("https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Poppins:ital,wght@0,300;0,500;0,700;1,300;1,500;1,700&display=swap");
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-heading font-bold;
+}
+
+h1,
+.h1 {
+  @apply text-5xl leading-snug;
+
+  &m {
+    @apply text-4xl hyphens-auto;
+  }
+}
+
+h2,
+.h2 {
+  @apply text-4xl leading-snug;
+
+  &m {
+    @apply text-3xl hyphens-auto;
+  }
+}
+
+h3,
+.h3 {
+  @apply text-3xl leading-snug;
+
+  &m {
+    @apply text-2xl hyphens-auto;
+  }
+}
+
+h4,
+.h4 {
+  @apply text-2xl leading-snug;
+
+  &m {
+    @apply text-xl hyphens-auto;
+  }
+}
+
+h5,
+.h5 {
+  @apply text-xl font-normal leading-snug;
+
+  &m {
+    @apply text-lg hyphens-auto;
+  }
+}
+
+h6,
+.h6 {
+  @apply text-lg font-normal leading-snug;
+
+  &m {
+    @apply text-base hyphens-auto;
+  }
+}
+
+body {
+  @apply font-body font-medium;
+}
+
+address,
+dl,
+fieldset,
+figure,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+ol,
+p,
+pre,
+table,
+ul {
+  @apply m-0 leading-[1.75] font-thin;
+}

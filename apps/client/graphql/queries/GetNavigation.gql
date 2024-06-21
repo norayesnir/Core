@@ -10,7 +10,7 @@ query GetNavigationMenu {
 			...Image
 		}
 		routes {
-			...MenuItem
+			id
 		}
 	}
 }

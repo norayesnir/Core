@@ -1,14 +1,22 @@
 import gql from 'graphql-tag';
-export const MenuItemFragmentDoc = gql`
-    fragment MenuItem on MenuItem {
-  __typename
-  id
-  title
-  description
-  icon
+export const MenuItemDefaultFragmentDoc = gql`
+    fragment MenuItemDefault on Menu_item_Default {
+  externalLink
   externalUrl
+  newTab
   referenceToPage {
-    id
+    route
+  }
+  icon {
+    name
+    right
+  }
+}
+    `;
+export const MenuItemExpandableFragmentDoc = gql`
+    fragment MenuItemExpandable on Menu_item_Expandable {
+  icon {
+    name
   }
   children {
     id
@@ -81,6 +89,11 @@ export const GetGlobalsDocument = gql`
         ...Image
       }
     }
+    icon {
+      library
+      type
+      corners
+    }
   }
 }
     ${ImageFragmentDoc}`;
@@ -91,6 +104,21 @@ export const GetImageDocument = gql`
   }
 }
     ${ImageFragmentDoc}`;
+export const GetMenuItemDocument = gql`
+    query GetMenuItem($id: Int!) {
+  Menu_item(id: $id) {
+    title
+    template
+    default {
+      ...MenuItemDefault
+    }
+    expandable {
+      ...MenuItemExpandable
+    }
+  }
+}
+    ${MenuItemDefaultFragmentDoc}
+${MenuItemExpandableFragmentDoc}`;
 export const GetNavigationMenuDocument = gql`
     query GetNavigationMenu {
   NavigationMenu {
@@ -101,12 +129,11 @@ export const GetNavigationMenuDocument = gql`
       ...Image
     }
     routes {
-      ...MenuItem
+      id
     }
   }
 }
-    ${ImageFragmentDoc}
-${MenuItemFragmentDoc}`;
+    ${ImageFragmentDoc}`;
 export const GetPageDocument = gql`
     query GetPage($template: Page_template_Input) {
   Pages(where: {template: {equals: $template}}) {

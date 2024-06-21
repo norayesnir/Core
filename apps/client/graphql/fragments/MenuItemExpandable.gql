@@ -1,0 +1,8 @@
+fragment MenuItemExpandable on Menu_item_Expandable {
+  icon {
+    name
+  }
+  children {
+    id
+  }
+}

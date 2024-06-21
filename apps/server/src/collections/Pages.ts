@@ -1,7 +1,6 @@
-
-import type { CollectionConfig } from 'payload/types';
-import * as PageTemplates from '../pages';
-import { livePreviewBreakpoints } from '../utils';
+import type { CollectionConfig } from 'payload/types'
+import * as PageTemplates from '../pages'
+import { livePreviewBreakpoints } from '../utils'
 
 const Pages: CollectionConfig = {
   slug: 'pages',
@@ -15,9 +14,9 @@ const Pages: CollectionConfig = {
     livePreview: {
       url: ({ data }) => {
         if (data.template === 'Home') {
-          return process.env.PAYLOAD_PUBLIC_SITE_URL;
+          return process.env.PAYLOAD_PUBLIC_SITE_URL
         } else {
-          return `${process.env.PAYLOAD_PUBLIC_SITE_URL}/${data.title.toLowerCase()}`;
+          return `${process.env.PAYLOAD_PUBLIC_SITE_URL}/${data.title.toLowerCase()}`
         }
       },
       breakpoints: livePreviewBreakpoints,
@@ -25,11 +24,11 @@ const Pages: CollectionConfig = {
   },
   access: {
     create: ({ req: { user } }) => {
-      return user.role === 'admin';
+      return user.role === 'admin'
     },
     read: () => true,
     delete: ({ req: { user } }) => {
-      return user.role === 'admin';
+      return user.role === 'admin'
     },
   },
   versions: true,
@@ -43,28 +42,6 @@ const Pages: CollectionConfig = {
         },
       ],
     },
-    // Title field should be before slug field for correct siblingData reference
-    {
-      name: 'slug',
-      type: 'text',
-      hidden: true,
-      unique: true,
-      hooks: {
-        beforeChange: [
-          ({ siblingData }) => {
-              siblingData.slug = siblingData.title.toLowerCase().replace(/ /g, '-');
-          },
-        ],
-        beforeValidate: [
-          ({ data, siblingData }) => {
-            if (!siblingData.slug && siblingData.title) {
-              // Ensure slug is generated if it's missing and title exists
-              data.slug = siblingData.title.toLowerCase().replace(/ /g, '-');
-            }
-          },
-        ],
-      },
-    },
     {
       name: 'title',
       label: 'Title',
@@ -75,12 +52,40 @@ const Pages: CollectionConfig = {
       },
     },
     {
+      name: 'slug',
+      type: 'text',
+      unique: true,
+      admin: {
+        position: 'sidebar',
+        readOnly: true,
+        description:
+          'This field is  automatically generated based on the title. To change it, edit the title field.',
+      },
+      hooks: {
+        beforeChange: [
+          ({ siblingData }) => {
+            siblingData.slug = siblingData.title
+              .toLowerCase()
+              .replace(/ /g, '-')
+          },
+        ],
+        beforeValidate: [
+          ({ data, siblingData }) => {
+            if (!siblingData.slug && siblingData.title) {
+              // Ensure slug is generated if it's missing and title exists
+              data.slug = siblingData.title.toLowerCase().replace(/ /g, '-')
+            }
+          },
+        ],
+      },
+    },
+    {
       name: 'template',
       type: 'select',
       required: true,
       access: {
         update: ({ req: { user } }) => {
-          return user.role === 'admin';
+          return user.role === 'admin'
         },
       },
       options: Object.keys(PageTemplates),
@@ -97,23 +102,22 @@ const Pages: CollectionConfig = {
       hooks: {
         beforeChange: [
           ({ siblingData }) => {
-            delete siblingData['route'];
+            delete siblingData['route']
           },
         ],
         afterRead: [
           ({ data }) => {
             switch (data.template) {
               case 'Home':
-                return '/';
+                return '/'
               default:
-                return `/${data.title.toLowerCase()}`;
+                return `/${data.title.toLowerCase().replace(/ /g, '-')}`
             }
           },
         ],
       },
     },
   ],
-};
+}
 
-export default Pages;
-
+export default Pages
